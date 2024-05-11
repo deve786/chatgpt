@@ -1,0 +1,14 @@
+*{
+  color: white;
+}
+.bot{
+  display: flex;
+  justify-content: start;
+}
+body{
+ 
+}
+.messages-container {
+  height: calc(100vh - 17rem);
+  max-width: 70rem;
+}
