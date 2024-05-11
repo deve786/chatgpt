@@ -1,10 +1,16 @@
 import React from 'react'
 
-function Navbar() {
+function Navbar({data}) {
+// const handleSidebar=()=>{
+//     console.log();
+    
+//     
+// }
+console.log(data);
     return (
         <div className='bg-neutral-800 flex justify-between md:hidden px-3 py-3 border-b-2 border-slate-500 '>
             <div>
-                <button>
+                <button onClick={()=>data(prev=>!prev)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon-sm"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.6 4H9.4c-2.24 0-3.36 0-4.216.436a4 4 0 0 0-1.748 1.748C3 7.04 3 8.16 3 10.4v3.2c0 2.24 0 3.36.436 4.216a4 4 0 0 0 1.748 1.748C6.04 20 7.16 20 9.4 20h6.2c2.24 0 3.36 0 4.216-.436a4 4 0 0 0 1.748-1.748C22 16.96 22 15.84 22 13.6v-3.2c0-2.24 0-3.36-.436-4.216a4 4 0 0 0-1.748-1.748C18.96 4 17.84 4 15.6 4M11 5v14"></path><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.25 8.25h1.5m-1.5 3h1.5"></path></svg>
                 </button>
             </div>

@@ -9,7 +9,7 @@ function App() {
   const [collapse, setCollapse] = useState(false)
   return (
     <div className="App min-h-screen  ">
-      <Navbar/>
+      <Navbar data={setCollapse}/>
       <div className='flex '>
         <Sidebar data={collapse}/>
         <Main data={setCollapse}/>

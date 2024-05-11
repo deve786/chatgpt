@@ -14,7 +14,14 @@ function Main({ data }) {
 
     const handleSend = async () => {
         setInput('')
-        // setUserInput(prev => [...prev, input])
+        setMessage([...message,{
+            text:input,
+            isBot:false
+        },
+        {
+            text: '...',
+            isBot: true
+        }])
         const res = await runChat(input)
         // setMessage(prev => [...prev, res])
         setMessage([...message,
@@ -31,7 +38,7 @@ function Main({ data }) {
 
 
     };
-
+console.log(data);
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             console.log("enterrr");
@@ -49,7 +56,7 @@ function Main({ data }) {
 
     // console.log(message);
     // console.log(input);
-    const l = message.length - 1
+    // const l = message.length - 1
 
     return (
         <div className='bg-neutral-800 w-full min-h-screen p-3 flex flex-col justify-between '>
