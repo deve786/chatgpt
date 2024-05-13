@@ -1,22 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { runChat } from '../openai'
 
-function Main({ data }) {
+function Main({ data, data1, data2 }) {
     const [input, setInput] = useState('');
-    const [message, setMessage] = useState([
-        {
-            text: 'Hiii......',
-            isBot: true
-        }
-    ])
+
 
     const messagesEndRef = useRef(null);
 
     const handleSend = async () => {
         setInput('')
-        setMessage([...message,{
-            text:input,
-            isBot:false
+        data2([...data1, {
+            text: input,
+            isBot: false
         },
         {
             text: '...',
@@ -24,21 +19,36 @@ function Main({ data }) {
         }])
         const res = await runChat(input)
         // setMessage(prev => [...prev, res])
-        setMessage([...message,
+        let resArray = res.split("**")
+        let newArray
+
+        for (let i = 0; i < resArray.length; i++) {
+
+            if (i === 0 || i % 2 !== 1) {
+                newArray+=resArray[i]
+            }else{
+                newArray+="<b>"+resArray[i]+"<b/>"
+            }
+
+        }
+
+        
+        console.log(resArray);
+        data2([...data1,
         {
             text: input,
             isBot: false
         },
         {
-            text: res,
+            text: newArray,
             isBot: true
         }
         ])
-        console.log(message.isBot);
+        console.log(data1.isBot);
 
 
     };
-console.log(data);
+    console.log(data);
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             console.log("enterrr");
@@ -46,20 +56,19 @@ console.log(data);
             event.preventDefault(); // Prevent the default action to avoid form submission if wrapped in a form
         }
     };
- const scrollToBottom = () => {
+    const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
     useEffect(() => {
         scrollToBottom();
-    }, [message]);
+    }, [data1]);
 
-    // console.log(message);
-    // console.log(input);
-    // const l = message.length - 1
+
+
 
     return (
-        <div className='bg-neutral-800 w-full min-h-screen p-3 flex flex-col justify-between '>
+        <div className='bg-neutral-800 w-full  p-3 flex flex-col justify-between min-h-screen'>
             <div className='fixed top-[50%] hidden md:block'>
                 <button onClick={() => data(prev => !prev)}><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z" /></svg>    </button>
             </div>
@@ -69,11 +78,11 @@ console.log(data);
                 <button className='flex px-3 py-2 hover:bg-neutral-700 rounded font-bold'>ChatGPT 3.5 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon-md text-token-text-tertiary"><path fill="currentColor" fill-rule="evenodd" d="M5.293 9.293a1 1 0 0 1 1.414 0L12 14.586l5.293-5.293a1 1 0 1 1 1.414 1.414l-6 6a1 1 0 0 1-1.414 0l-6-6a1 1 0 0 1 0-1.414" clip-rule="evenodd"></path></svg></button>
             </div>
 
-            <div className='flex  flex-col w-full items-center  max-w-52  overflow-auto  messages-container scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-transparent ' >
+            <div className='min-h-64 flex  flex-col w-full items-center  max-w-52  overflow-auto  messages-container scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-transparent ' >
                 {
 
 
-                    message.map(i => {
+                    data1.map(i => {
                         return (
                             <div className={i.isBot ? "bot flex w-[75%]" : "flex w-[75%] justify-end"} >
                                 {
@@ -94,7 +103,7 @@ console.log(data);
                         );
                     })
                 }
-                
+
             </div>
             <div className='flex justify-center flex-col items-center ' >
                 {/* <div className='flex flex-wrap w-[100%] gap-3 flex-2 justify-center lg:w-[60%]'>
